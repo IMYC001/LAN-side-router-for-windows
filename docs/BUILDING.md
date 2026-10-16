@@ -31,10 +31,10 @@ git clone https://github.com/IMYC001/LAN-side-router-for-windows.git
 cd LAN-side-router-for-windows
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Get-Tools.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Get-Mihomo.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Build.ps1 -OutputName Accelerator-0.5.13 -SmokeTest
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Build.ps1 -OutputName Accelerator-0.5.14 -SmokeTest
 ```
 
-Output: `dist\Accelerator-0.5.13\Accelerator.exe`. Keep the entire directory together.
+Output: `dist\Accelerator-0.5.14\Accelerator.exe`. Keep the entire directory together.
 
 默认执行 Go 测试、`go vet`、Windows 自包含发布；`-SmokeTest` 额外执行桌面离线检查及截图。验证报告位于 `test-results`，不随安装包分发。截图及网络夹具使用测试数据；不会接管真实设备。桌面截图测试需要可用的 Windows 桌面会话。
 
@@ -44,20 +44,23 @@ The default build runs Go tests, `go vet` and self-contained Windows publishing.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Get-InstallerTools.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Build-Installer.ps1 -OutputName Accelerator-0.5.13 -SkipAppBuild
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Build-Installer.ps1 -OutputName Accelerator-0.5.14 -SkipAppBuild
 ```
 
 先完成上一步带 `-SmokeTest` 的构建。安装包脚本核对本版二进制、验证报告、原厂驱动签名/哈希及许可后编译。`Get-InstallerTools.ps1` 会在 `.tools` 安装编译器并只读提取 MSI 许可，不安装网络驱动。`-SkipAppBuild` 只跳过已完成的应用构建，不跳过校验。
 
 Complete the smoke-tested app build first. Packaging verifies binary/report hashes, the vendor driver signature/checksum and its license. The tool script installs the compiler locally and reads MSI metadata without installing a network driver. `-SkipAppBuild` keeps all packaging verification.
 
-Output: `dist\Accelerator-0.5.13-Setup-win-x64.exe`.
+Output: `dist\Accelerator-0.5.14-Setup-win-x64.exe`.
 
 ## GitHub 构建 / GitHub Build
 
-仓库的 Actions 中提供手动运行的 `Build v0.5.13 release packages`。它从固定的已审查版本标签导出源码，在 GitHub Windows runner 上运行相同的构建和离线验证，只向已存在的草稿 Release 上传文件，不会自动公开发布。需要仓库写入权限；运行前应停止其他对该草稿的附件上传。
+仓库的 Actions 中提供手动运行的 `Build v0.5.14 release packages`。它从固定的已审查版本标签导出源码，在 GitHub Windows runner 上运行相同的构建和离线验证，只向已存在的草稿 Release 上传文件，不会自动公开发布。需要仓库写入权限；运行前应停止其他对该草稿的附件上传。
 
-The manually dispatched `Build v0.5.13 release packages` workflow exports the reviewed tag, runs the same builds and offline checks on a GitHub Windows runner, and uploads only to an existing draft release. It does not publish the release. Repository write access is required; stop other uploads to the draft before running it.
+The manually dispatched `Build v0.5.14 release packages` workflow exports the reviewed tag, runs the same builds and offline checks on a GitHub Windows runner, and uploads only to an existing draft release. It does not publish the release. Repository write access is required; stop other uploads to the draft before running it.
+
+运行时选择 `v0.5.14` 标签；工作流核对标签提交和本次运行提交一致。
+Select the `v0.5.14` tag when dispatching; the workflow verifies that the tag and workflow run use the same commit.
 
 ## 验证范围 / Validation Scope
 

@@ -1,4 +1,4 @@
-param([string]$OutputName = 'Accelerator-0.5.13', [switch]$SkipAppBuild)
+param([string]$OutputName = 'Accelerator-0.5.14', [switch]$SkipAppBuild)
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if ($OutputName -notmatch '^Accelerator(?:-[A-Za-z0-9.-]+)?$') { throw 'Invalid release directory.' }
@@ -15,11 +15,11 @@ $lockPath = Join-Path $lockDirectory "build-$OutputName.lock"
 $releaseLock = [IO.File]::Open($lockPath, [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
 try {
 $executable = Join-Path $release 'Accelerator.exe'
-if ((Get-Item -LiteralPath $executable).VersionInfo.FileVersion -ne '0.5.13.0') {
-    throw 'Installer requires release 0.5.13.'
+if ((Get-Item -LiteralPath $executable).VersionInfo.FileVersion -ne '0.5.14.0') {
+    throw 'Installer requires release 0.5.14.'
 }
 $checks = Get-Content -LiteralPath (Join-Path $root "test-results\$OutputName-checks.json") -Raw | ConvertFrom-Json
-if (-not $checks.passed -or $checks.version -ne '0.5.13' -or -not $checks.subscriptionFetchChecksPassed -or -not $checks.subscriptionTlsChecksPassed -or
+if (-not $checks.passed -or $checks.version -ne '0.5.14' -or -not $checks.subscriptionFetchChecksPassed -or -not $checks.subscriptionTlsChecksPassed -or
     -not $checks.languageChecksPassed -or -not $checks.languageRestartChecksPassed -or -not $checks.aboutChecksPassed -or $checks.physicalGatewayStarted) {
     throw 'Valid offline desktop checks are required.'
 }
@@ -42,9 +42,9 @@ $inspectionPath = Join-Path $root 'test-results\installer-checks.json'
 if (Test-Path -LiteralPath $inspectionPath) { Remove-Item -LiteralPath $inspectionPath }
 & $compiler '/Q' ("/DReleaseDir=$release") ("/DInstallerAssets=$assets") (Join-Path $root 'installer\Accelerator.iss')
 if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed.' }
-$setup = Join-Path $root 'dist\Accelerator-0.5.13-Setup-win-x64.exe'
+$setup = Join-Path $root 'dist\Accelerator-0.5.14-Setup-win-x64.exe'
 $inspection = [ordered]@{
-    version = '0.5.13'
+    version = '0.5.14'
     generated = [DateTime]::UtcNow.ToString('o')
     installerSHA256 = (Get-FileHash -LiteralPath $setup -Algorithm SHA256).Hash
     installerBytes = (Get-Item -LiteralPath $setup).Length

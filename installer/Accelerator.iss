@@ -8,9 +8,9 @@
 [Setup]
 AppId={{9ECBE427-356D-41FA-AFE7-E835A85CC1D4}
 AppName=局域网设备加速（旁路由模式）
-AppVersion=0.5.13
-VersionInfoVersion=0.5.13.0
-VersionInfoTextVersion=0.5.13.0
+AppVersion=0.5.14
+VersionInfoVersion=0.5.14.0
+VersionInfoTextVersion=0.5.14.0
 AppPublisher=IMYC001
 AppPublisherURL=https://github.com/IMYC001/LAN-side-router-for-windows
 AppSupportURL=https://github.com/IMYC001/LAN-side-router-for-windows/issues
@@ -25,7 +25,7 @@ ArchitecturesAllowed=x64os
 ArchitecturesInstallIn64BitMode=x64os
 MinVersion=10.0.19041
 OutputDir=..\dist
-OutputBaseFilename=Accelerator-0.5.13-Setup-win-x64
+OutputBaseFilename=Accelerator-0.5.14-Setup-win-x64
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern

@@ -75,7 +75,7 @@ func handle(r request) response {
 	case "prepare-outbound":
 		result, err = subscription.BuildOutbound([]byte(r.Subscription), r.Outbound)
 	case "version":
-		result = map[string]any{"version": "0.5.13", "runtime": debugInfo(), "networkTakeoverEnabled": false,
+		result = map[string]any{"version": "0.5.14", "runtime": debugInfo(), "networkTakeoverEnabled": false,
 			"autoDiscoveryAvailable": true, "winpkFilterAvailable": true, "independentOutboundAvailable": true, "continuousGatewayAvailable": true}
 	case "start", "arp", "capture", "install-driver":
 		err = errors.New("此命令不提供真实操作；限时测试须通过界面确认并启动独立辅助进程")

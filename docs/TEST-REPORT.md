@@ -2,6 +2,14 @@
 
 > Public archive: local network/device identifiers below are illustrative replacements. Historical sections describe their original development stage.
 
+## 0.5.14 开源发布与订阅取消边界（2026-10-16）
+
+- 首次 GitHub Windows 干净构建发现：HTTP 正文读取在请求取消后可能以正常 EOF 结束，下载器因此误报成功。现在读取后再次检查请求上下文，超时或取消均返回固定失败类别并丢弃正文；未修改转发路径。
+- 新增取消后不返回订阅内容的回归检查。正文超时与取消检查各连续运行 25 轮通过；随后全部 Go 测试、静态检查、Windows 自包含发布和 WPF 离线检查通过。
+- 本版离线报告为 `test-results/Accelerator-0.5.14-checks.json`，`passed=true`、`physicalGatewayStarted=false`。覆盖独立设备状态、控制确认与失败重试、订阅 TLS 兼容、配置重启恢复、中英切换、关于页、主题和紧凑布局。文档截图重新取自本版离线夹具。
+- 完整原创源码、构建脚本、中英图文说明、第三方许可和发布工作流纳入开源目录；排除工具缓存、二进制输出、会话、用户设置与真实订阅。
+- 本轮没有启动物理网关、读取真实订阅、修改网络或安装/卸载驱动。安装包编译、云端构建及附件结果应以对应构建日志为准；实际安装卸载、跨电脑使用及真实设备游戏性能没有重新验收。
+
 ## 0.5.13 标题、关于、语言与目录整理（2026-10-16）
 
 - 标题改为“局域网设备加速（旁路由模式）”；设置下方新增关于页，图标、名称、GitHub 超链接、QQ 和鸣谢居中排列。

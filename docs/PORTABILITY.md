@@ -1,6 +1,6 @@
 # Windows Portability
 
-Version 0.5.13, reviewed 2026-10-16.
+Version 0.5.14, reviewed 2026-10-16.
 
 The Settings page offers Simplified Chinese and English below the accent colors.
 The selected language is saved for the current Windows account. Switching it only

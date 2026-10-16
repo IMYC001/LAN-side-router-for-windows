@@ -2,7 +2,25 @@
 
 [简体中文](README.md) · [English](README.en.md)
 
+## 0.5.14 — 2026-10-16
+
+### 简体中文
+
+- 首个正式公开 Release，包含 0.5.13 的全部功能、中英文图文文档和完整源码。
+- 修复订阅请求取消或超时时，HTTP 流以正常 EOF 结束而误报成功的边界情况；取消后的内容不会返回。
+- 新增请求取消回归测试，并在本机及 GitHub Windows runner 上构建验证。
+- 新增手动 Windows 发布构建，仅更新草稿附件，正式发布前核对哈希。
+
+### English
+
+- First published release, including all 0.5.13 features, complete source and bilingual illustrated guides.
+- Reject canceled/timed-out subscription bodies even when the HTTP reader reports a clean EOF.
+- Added cancellation regression coverage and builds on both the local PC and a GitHub Windows runner.
+- Added a manual Windows release build that updates draft assets for verification before publication.
+
 ## 0.5.13 — 2026-10-16
+
+Source preparation candidate; superseded by 0.5.14 before publishing a binary release.
 
 ### 简体中文
 

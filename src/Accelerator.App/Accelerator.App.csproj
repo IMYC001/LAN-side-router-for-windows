@@ -9,7 +9,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\accelerator.ico</ApplicationIcon>
     <AssemblyName>Accelerator</AssemblyName>
-    <Version>0.5.13</Version>
+    <Version>0.5.14</Version>
     <Product>局域网设备加速器</Product>
     <Title>局域网设备加速（旁路由模式）</Title>
     <Company>IMYC001</Company>

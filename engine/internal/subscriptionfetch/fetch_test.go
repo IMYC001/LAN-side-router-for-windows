@@ -185,6 +185,20 @@ func TestBodyDeadline(t *testing.T) {
 	}
 }
 
+func TestCancellationDiscardsBody(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	server := quietTLS(t, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte("proxies: []"))
+		w.(http.Flusher).Flush()
+		cancel()
+	}), false)
+	result := fetch(ctx, Request{URL: server.URL}, trustedTransport(t, server))
+	if result.Failure != "timeout" || len(result.Content) != 0 {
+		t.Fatal("canceled request returned subscription content", result.Failure)
+	}
+}
+
 func TestExplicitHTTPProxy(t *testing.T) {
 	endpoint := quietTLS(t, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte("proxies: []"))

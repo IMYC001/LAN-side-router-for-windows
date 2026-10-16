@@ -1,4 +1,4 @@
-param([switch]$Verify, [string]$Version = '0.5.13')
+param([switch]$Verify, [string]$Version = '0.5.14')
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid version.' }

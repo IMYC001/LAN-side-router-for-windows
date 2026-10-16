@@ -14,7 +14,7 @@
 
 把 Windows 电脑作为同一局域网内设备的代理网关，使用你已有的 Clash 订阅节点转发设备的 **IPv4 TCP/UDP** 流量。目标设备无需安装客户端：开始加速后，把软件生成的 IP、子网掩码、网关和 DNS 填入设备即可自动识别。
 
-当前版本 **0.5.13**。适用于 PS5，以及允许手动配置上述 IPv4 参数的其他设备；其他型号的兼容性需要实际验证。软件不提供节点或订阅，也不是网易 UU 产品。
+当前版本 **0.5.14**。适用于 PS5，以及允许手动配置上述 IPv4 参数的其他设备；其他型号的兼容性需要实际验证。软件不提供节点或订阅，也不是网易 UU 产品。
 
 ![独立设备加速卡片](docs/images/device-card-zh.png)
 
@@ -67,8 +67,8 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| `Accelerator-0.5.13-Setup-win-x64.exe` | 推荐；包含运行时、核心及原厂 Windows Packet Filter 驱动安装包 |
-| `Accelerator-0.5.13-win-x64.zip` | 文件夹版；必须解压全部文件，且电脑已安装受支持驱动 |
+| `Accelerator-0.5.14-Setup-win-x64.exe` | 推荐；包含运行时、核心及原厂 Windows Packet Filter 驱动安装包 |
+| `Accelerator-0.5.14-win-x64.zip` | 文件夹版；必须解压全部文件，且电脑已安装受支持驱动 |
 | `SHA256SUMS.txt` | 下载文件的 SHA-256 校验值 |
 | GitHub `Source code` | 本项目完整源码，不是可直接运行的程序 |
 
@@ -126,7 +126,7 @@ TCP 类节点测直连 TCP 建连耗时，Hysteria/Hysteria2/TUIC 测 ICMP；与
 - [构建与验证 / Building](docs/BUILDING.md)：固定工具版本、源码结构、离线测试、安装包。
 - [安装与卸载](docs/INSTALLATION.md)：驱动授权、共享驱动、卸载边界。
 - [Windows 可移植性（English）](docs/PORTABILITY.md)：驱动需求、账户加密、HTTPS 兼容。
-- [更新记录 / Changelog](CHANGELOG.md) · [0.5.13 Release 说明](docs/releases/v0.5.13.md)。
+- [更新记录 / Changelog](CHANGELOG.md) · [0.5.14 Release 说明](docs/releases/v0.5.14.md)。
 - [参与贡献 / Contributing](CONTRIBUTING.md) · [安全与隐私 / Security](SECURITY.md)。
 
 仓库包含 WPF 桌面、Go 转发引擎、安装器、构建脚本和测试源码。构建会下载固定版本的工具与第三方依赖；个人配置、订阅、诊断原始数据、驱动二进制和工具缓存不进入 Git。

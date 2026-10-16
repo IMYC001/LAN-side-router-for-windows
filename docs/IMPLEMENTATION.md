@@ -1,6 +1,9 @@
 # Implementation State
 
-Version 0.5.13, updated 2026-10-16.
+Version 0.5.14, updated 2026-10-16.
+
+0.5.14 rejects canceled or timed-out subscription bodies even when the HTTP
+stream reports a clean EOF. Gateway forwarding behavior is unchanged.
 
 0.5.13 adds persistent Chinese/English UI localization and an About page. Original
 source, build scripts, tests and installer sources are published under GPL-3.0-only.

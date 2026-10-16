@@ -349,7 +349,7 @@
           <TextBlock x:Name="StatusText" Text="{local:Loc '准备就绪'}" Foreground="{DynamicResource SubtleBrush}" FontSize="10" Margin="0,2,0,0"
                      TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
         </StackPanel>
-        <TextBlock Grid.Column="1" Text="0.5.13" Foreground="{DynamicResource SubtleBrush}" FontSize="10" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Text="0.5.14" Foreground="{DynamicResource SubtleBrush}" FontSize="10" VerticalAlignment="Center"/>
       </Grid>
     </Border>
   </Grid>

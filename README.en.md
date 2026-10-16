@@ -14,7 +14,7 @@
 
 Use your Windows PC as a proxy gateway for devices on the same LAN. Forward their **IPv4 TCP/UDP** traffic through nodes in your existing Clash subscription. No client is required on the target device: start acceleration, enter the generated IP address, subnet mask, gateway and DNS, and the app detects it.
 
-Current version: **0.5.13**. Designed around PS5 and other devices with manual IPv4 network settings; compatibility with additional models requires testing. No proxy service or subscription is provided. This project is not affiliated with NetEase UU.
+Current version: **0.5.14**. Designed around PS5 and other devices with manual IPv4 network settings; compatibility with additional models requires testing. No proxy service or subscription is provided. This project is not affiliated with NetEase UU.
 
 ![Acceleration interface](docs/images/acceleration-en.png)
 
@@ -67,8 +67,8 @@ Get files from [Releases](https://github.com/IMYC001/LAN-side-router-for-windows
 
 | File | Purpose |
 | --- | --- |
-| `Accelerator-0.5.13-Setup-win-x64.exe` | Recommended; runtime, proxy core and complete vendor Windows Packet Filter installer |
-| `Accelerator-0.5.13-win-x64.zip` | Folder distribution; extract everything and use an already installed supported driver |
+| `Accelerator-0.5.14-Setup-win-x64.exe` | Recommended; runtime, proxy core and complete vendor Windows Packet Filter installer |
+| `Accelerator-0.5.14-win-x64.zip` | Folder distribution; extract everything and use an already installed supported driver |
 | `SHA256SUMS.txt` | SHA-256 checksums |
 | GitHub `Source code` | Full project source, not a ready-to-run application |
 
@@ -126,7 +126,7 @@ Check the HTTPS URL, certificate trust and provider's client requirements, or im
 - [Building and validation / 构建](docs/BUILDING.md): pinned tools, layout, offline checks and setup packaging.
 - [Installation and removal (Chinese)](docs/INSTALLATION.md): driver consent, shared drivers and uninstall behavior.
 - [Windows portability](docs/PORTABILITY.md): drivers, account encryption and HTTPS compatibility.
-- [Changelog](CHANGELOG.md) · [0.5.13 release notes](docs/releases/v0.5.13.md).
+- [Changelog](CHANGELOG.md) · [0.5.14 release notes](docs/releases/v0.5.14.md).
 - [Contributing](CONTRIBUTING.md) · [Security and privacy](SECURITY.md).
 
 The repository contains the WPF desktop, Go engine, installer, build scripts and test source. Builds fetch pinned tools and dependencies. Personal subscriptions, configuration, raw diagnostics, driver binaries and tool caches are excluded from Git.

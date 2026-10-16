@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory = $true)][string]$DeviceIP,
     [Parameter(Mandatory = $true)][string]$DeviceMAC,
     [Parameter(Mandatory = $true)][string]$AdapterGUID,
-    [string]$OutputName = 'Accelerator-0.5.13',
+    [string]$OutputName = 'Accelerator-0.5.14',
     [switch]$ProbeTarget
 )
 $ErrorActionPreference = 'Stop'

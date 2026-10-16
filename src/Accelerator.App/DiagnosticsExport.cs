@@ -26,7 +26,7 @@ internal static class DiagnosticsExport
             {
                 Add(zip, "summary.json", new
                 {
-                    version = "0.5.13", generated = DateTime.UtcNow,
+                    version = "0.5.14", generated = DateTime.UtcNow,
                     scope = "IPv4 gateway diagnostics. Includes local device addresses and counters. No subscription, credentials, configuration, logs or payloads.",
                     knownIssue = "Multi-device throughput has not yet been validated on physical devices.",
                     network = snapshot,

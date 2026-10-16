@@ -89,6 +89,10 @@ func fetch(ctx context.Context, input Request, transport *http.Transport) Result
 		return Result{Failure: "size"}
 	}
 	content, err := io.ReadAll(io.LimitReader(response.Body, subscription.MaxBytes+1))
+	// A canceled HTTP stream can report EOF without a separate read error.
+	if contextErr := ctx.Err(); contextErr != nil {
+		return Result{Failure: classify(contextErr)}
+	}
 	if err != nil {
 		return Result{Failure: classify(err)}
 	}

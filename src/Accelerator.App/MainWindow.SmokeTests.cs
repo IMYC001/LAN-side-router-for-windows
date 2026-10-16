@@ -220,7 +220,7 @@ public partial class MainWindow
         if (devices.Count != 1) throw new InvalidOperationException("至少一台设备保护失败。");
         await File.WriteAllTextAsync(Path.Combine(directory, "..", "desktop-checks.json"), JsonSerializer.Serialize(new
         {
-            version = "0.5.13", passed = true, time = DateTime.UtcNow,
+            version = "0.5.14", passed = true, time = DateTime.UtcNow,
             checks = new[] { "Encrypted profile restart and corruption fixtures", "Subscription import, switch, delete and failure preservation",
                 "Subscription TLS/transport fallbacks", "Loopback proxy isolation and cleanup", "Offline TCP/UDP relay",
                 "Shared device card geometry, dropdown themes, parameters and collapse placement",

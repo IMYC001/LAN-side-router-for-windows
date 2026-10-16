@@ -92,7 +92,7 @@ if ($SmokeTest) {
     $checks = Join-Path $projectRoot 'test-results\desktop-checks.json'
     if (-not (Test-Path -LiteralPath $checks)) { throw 'Desktop verification report missing.' }
     $report = Get-Content -LiteralPath $checks -Raw | ConvertFrom-Json
-    if (-not $report.passed -or $report.version -ne '0.5.13' -or -not $report.subscriptionFetchChecksPassed -or -not $report.subscriptionTlsChecksPassed -or
+    if (-not $report.passed -or $report.version -ne '0.5.14' -or -not $report.subscriptionFetchChecksPassed -or -not $report.subscriptionTlsChecksPassed -or
         -not $report.languageChecksPassed -or -not $report.languageRestartChecksPassed -or -not $report.aboutChecksPassed -or $report.physicalGatewayStarted) {
         throw 'Desktop verification report is invalid.'
     }
