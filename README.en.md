@@ -68,7 +68,6 @@ Get files from [Releases](https://github.com/IMYC001/LAN-side-router-for-windows
 | File | Purpose |
 | --- | --- |
 | `Accelerator-0.5.14-Setup-win-x64.exe` | Recommended; runtime, proxy core and complete vendor Windows Packet Filter installer |
-| `Accelerator-0.5.14-win-x64.zip` | Folder distribution; extract everything and use an already installed supported driver |
 | `SHA256SUMS.txt` | SHA-256 checksums |
 | GitHub `Source code` | Full project source, not a ready-to-run application |
 
@@ -78,7 +77,7 @@ An installed **Npcap or Windows Packet Filter** backend is required. Setup reuse
 
 ## Quick Start
 
-1. Install or extract the entire app folder. Connect the PC and target device to the same LAN. Record the device's original IP/DNS settings.
+1. Run the setup installer. Connect the PC and target device to the same LAN. Record the device's original IP/DNS settings.
 2. Import your own Clash subscription or local YAML on Subscriptions, test latency and select a node. UDP games require a UDP-capable node.
 3. Keep the default Independent subscription mode, or select an existing Clash endpoint in Settings. For the latter, switch Clash to **Global mode** first.
 4. Click Start on a device card and approve the helper. **Wait until that card says the gateway is ready**, then enter its IPv4 address, subnet mask, default gateway and DNS on that device.
@@ -116,7 +115,7 @@ Only IPv4 TCP/UDP is forwarded. Public ICMP is not forwarded; only the generated
 TCP-based nodes use direct TCP connect timing; Hysteria/Hysteria2/TUIC use ICMP. These differ from HTTP URL-tests and game paths. Existing Clash mode shows `--` when its remote node is unknown.
 
 **Can I move saved subscriptions to another PC?**  
-DPAPI data is bound to the Windows account and machine. Reimport subscriptions on a new PC. The folder package still needs an installed supported driver.
+DPAPI data is bound to the Windows account and machine. Run the setup installer and reimport subscriptions on a new PC.
 
 **What if importing a subscription fails?**  
 Check the HTTPS URL, certificate trust and provider's client requirements, or import local YAML. Provider-only configurations, dialer chains and unsupported plugins cannot be used as standalone nodes; export concrete nodes or use the existing Clash endpoint.

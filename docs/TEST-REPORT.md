@@ -8,7 +8,7 @@
 - 新增取消后不返回订阅内容的回归检查。正文超时与取消检查各连续运行 25 轮通过；随后全部 Go 测试、静态检查、Windows 自包含发布和 WPF 离线检查通过。
 - 本版离线报告为 `test-results/Accelerator-0.5.14-checks.json`，`passed=true`、`physicalGatewayStarted=false`。覆盖独立设备状态、控制确认与失败重试、订阅 TLS 兼容、配置重启恢复、中英切换、关于页、主题和紧凑布局。文档截图重新取自本版离线夹具。
 - 完整原创源码、构建脚本、中英图文说明、第三方许可和发布工作流纳入开源目录；排除工具缓存、二进制输出、会话、用户设置与真实订阅。
-- GitHub Windows runner 从 `832f2feea8e4656e5aac4a0147b9aaf160dbdc52` 标签源码完成全部测试、离线界面检查和安装包编译，`passed=true`、`physicalGatewayStarted=false`，原厂 MSI 签名有效。首次附件上传成功后的标签查询接口返回 404；最新工作流改用支持草稿的 Release 查询，并逐项核对三份附件的大小与 SHA-256。记录见 Actions 构建日志。
+- GitHub Windows runner 从 `832f2feea8e4656e5aac4a0147b9aaf160dbdc52` 标签源码完成全部测试、离线界面检查和安装包编译，`passed=true`、`physicalGatewayStarted=false`，原厂 MSI 签名有效。首次附件上传成功后的标签查询接口返回 404；最新工作流改用支持草稿的 Release 查询，并逐项核对安装版与校验附件的大小及 SHA-256。最终按用户要求仅发布安装版，文档取自工作流提交；记录见 Actions 构建日志。
 - 本轮没有启动物理网关、读取真实订阅、修改网络或安装/卸载驱动。安装包编译、云端构建及附件结果应以对应构建日志为准；实际安装卸载、跨电脑使用及真实设备游戏性能没有重新验收。
 
 ## 0.5.13 标题、关于、语言与目录整理（2026-10-16）

@@ -32,6 +32,21 @@ jobs:
           git -C tagged-source archive --format=zip --output=../release-source.zip HEAD
           if ($LASTEXITCODE -ne 0) { throw 'Source export failed.' }
           Expand-Archive -LiteralPath release-source.zip -DestinationPath release-source
+          git -C tagged-source fetch --depth 1 origin $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'Publication metadata fetch failed.' }
+          git -C tagged-source archive --format=zip --output=../publication-docs.zip $env:GITHUB_SHA README.md README.en.md CHANGELOG.md docs
+          if ($LASTEXITCODE -ne 0) { throw 'Publication metadata export failed.' }
+          Expand-Archive -LiteralPath publication-docs.zip -DestinationPath publication-docs
+          foreach ($file in @('README.md', 'README.en.md', 'CHANGELOG.md')) {
+            Copy-Item -LiteralPath "publication-docs/$file" -Destination "release-source/$file" -Force
+          }
+          $docsRoot = Join-Path $PWD 'publication-docs/docs'
+          Get-ChildItem -LiteralPath $docsRoot -File -Recurse | ForEach-Object {
+            $relative = [IO.Path]::GetRelativePath($docsRoot, $_.FullName)
+            $target = Join-Path (Join-Path $PWD 'release-source/docs') $relative
+            New-Item -ItemType Directory -Path (Split-Path $target) -Force | Out-Null
+            Copy-Item -LiteralPath $_.FullName -Destination $target -Force
+          }
 
       - name: Download verified tools and dependencies
         working-directory: release-source
@@ -46,19 +61,13 @@ jobs:
           ./scripts/Build.ps1 -OutputName Accelerator-0.5.14 -SmokeTest
           Get-Content test-results/Accelerator-0.5.14-checks.json
 
-      - name: Build the installer and folder archive
+      - name: Build the installer
         working-directory: release-source
         run: |
           $ErrorActionPreference = 'Stop'
           ./scripts/Build-Installer.ps1 -OutputName Accelerator-0.5.14 -SkipAppBuild
-          [IO.Compression.ZipFile]::CreateFromDirectory(
-            (Join-Path $PWD 'dist/Accelerator-0.5.14'),
-            (Join-Path $PWD 'dist/Accelerator-0.5.14-win-x64.zip'),
-            [IO.Compression.CompressionLevel]::Optimal,
-            $true)
           $lines = foreach ($name in @(
-            'Accelerator-0.5.14-Setup-win-x64.exe',
-            'Accelerator-0.5.14-win-x64.zip'
+            'Accelerator-0.5.14-Setup-win-x64.exe'
           )) {
             $hash = (Get-FileHash -LiteralPath "dist/$name" -Algorithm SHA256).Hash.ToLowerInvariant()
             "$hash  $name"
@@ -80,7 +89,6 @@ jobs:
           }
           gh release upload v0.5.14 `
             dist/Accelerator-0.5.14-Setup-win-x64.exe `
-            dist/Accelerator-0.5.14-win-x64.zip `
             dist/SHA256SUMS.txt --clobber
           if ($LASTEXITCODE -ne 0) { throw 'Release asset upload failed.' }
           $metadata = gh release view v0.5.14 --json isDraft,assets
@@ -88,7 +96,6 @@ jobs:
           $release = $metadata | ConvertFrom-Json
           $files = @(
             'Accelerator-0.5.14-Setup-win-x64.exe',
-            'Accelerator-0.5.14-win-x64.zip',
             'SHA256SUMS.txt'
           )
           if (-not $release.isDraft -or $release.assets.Count -ne $files.Count) {

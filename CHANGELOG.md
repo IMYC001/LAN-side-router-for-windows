@@ -10,6 +10,7 @@
 - 修复订阅请求取消或超时时，HTTP 流以正常 EOF 结束而误报成功的边界情况；取消后的内容不会返回。
 - 新增请求取消回归测试，并在本机及 GitHub Windows runner 上构建验证。
 - 新增手动 Windows 发布构建，仅更新草稿附件，正式发布前核对哈希。
+- 正式下载仅提供 Windows 安装版及 SHA-256 校验文件，不分发文件夹版。
 
 ### English
 
@@ -17,6 +18,7 @@
 - Reject canceled/timed-out subscription bodies even when the HTTP reader reports a clean EOF.
 - Added cancellation regression coverage and builds on both the local PC and a GitHub Windows runner.
 - Added a manual Windows release build that updates draft assets for verification before publication.
+- Downloads contain only the Windows setup installer and SHA-256 checksums, without a folder distribution.
 
 ## 0.5.13 — 2026-10-16
 

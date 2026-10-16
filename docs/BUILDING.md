@@ -59,8 +59,8 @@ Output: `dist\Accelerator-0.5.14-Setup-win-x64.exe`.
 
 The manually dispatched `Build v0.5.14 release packages` workflow exports the reviewed tag, runs the same builds and offline checks on a GitHub Windows runner, and uploads only to an existing draft release. It does not publish the release. Repository write access is required; stop other uploads to the draft before running it.
 
-从 `main` 分支运行最新工作流；它始终导出 `v0.5.14` 标签并核对固定的已审查源码提交 `832f2feea8e4656e5aac4a0147b9aaf160dbdc52`。工作流可单独修正，不移动版本标签。上传后逐一核对三份附件的名称、大小、状态和 SHA-256。
-Dispatch the latest workflow from `main`. It always exports `v0.5.14` and verifies the fixed reviewed source commit `832f2feea8e4656e5aac4a0147b9aaf160dbdc52`. Workflow-only repairs do not move the release tag. All three uploaded assets are checked for name, size, state and SHA-256.
+从 `main` 分支运行最新工作流；它始终导出 `v0.5.14` 标签并核对固定的已审查应用源码提交 `832f2feea8e4656e5aac4a0147b9aaf160dbdc52`。随包 README、更新记录及 docs 从本次工作流提交导出，保证安装版说明反映最终发布形式；应用源码不变。仅打包安装版，上传后核对安装包和校验文件的名称、大小、状态和 SHA-256。
+Dispatch the latest workflow from `main`. It exports `v0.5.14` and verifies the reviewed application source commit `832f2feea8e4656e5aac4a0147b9aaf160dbdc52`. Bundled READMEs, changelog and docs come from the workflow commit to reflect the final distribution format; application source is unchanged. Only the installer is packaged. Both the installer and checksum asset are checked for name, size, state and SHA-256.
 
 ## 验证范围 / Validation Scope
 
