@@ -1,0 +1,12 @@
+.tools/
+bin/
+obj/
+dist/
+*.user
+*.log
+.state/
+test-results/
+*.protected
+*.protected.bak
+*.dmp
+.vs/

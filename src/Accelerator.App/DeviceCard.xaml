@@ -1,0 +1,167 @@
+<UserControl x:Class="Accelerator.App.DeviceCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Accelerator.App">
+  <Border Background="{DynamicResource WindowBrush}" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1" CornerRadius="7" Padding="18" Margin="0,0,0,16">
+    <StackPanel>
+      <Grid Margin="0,0,0,20">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock x:Name="PrimaryPageTitle" Text="{Binding Name}" Style="{StaticResource PageTitle}" TextTrimming="CharacterEllipsis"/>
+          <TextBlock x:Name="GatewayStateText" Text="{local:TranslatedBinding State}" Foreground="{DynamicResource MutedBrush}" FontSize="11" Margin="0,4,12,0"/>
+        </StackPanel>
+        <Button Grid.Column="1" x:Name="StartGatewayButton" Click="Toggle_Click" Tag="{Binding}" IsEnabled="{Binding CanToggleAcceleration}"
+                VerticalAlignment="Top" Margin="12,2,0,0" MinWidth="120" Height="36">
+          <Button.Style>
+            <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding ActionRunning}" Value="True">
+                  <Setter Property="Background" Value="{DynamicResource WindowBrush}"/>
+                  <Setter Property="Foreground" Value="{DynamicResource ErrorBrush}"/>
+                  <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ActionEnding}" Value="True">
+                  <Setter Property="Background" Value="{DynamicResource WindowBrush}"/>
+                  <Setter Property="Foreground" Value="{DynamicResource ErrorBrush}"/>
+                  <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Style>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock x:Name="GatewayActionIcon" Style="{StaticResource IconText}" Text="{Binding ActionIcon}" Margin="0,0,8,0"/>
+            <TextBlock x:Name="GatewayActionText" Text="{local:TranslatedBinding ActionText}" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+          </StackPanel>
+        </Button>
+      </Grid>
+      <Grid Margin="0,0,0,20">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <Border Background="{DynamicResource SoftBrush}" CornerRadius="7" Width="42" Height="44">
+          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7FC;" Foreground="{DynamicResource AccentTextBrush}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <StackPanel Grid.Column="1" Margin="12,1,0,0" VerticalAlignment="Center">
+          <TextBlock x:Name="DeviceTitleText" Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+          <TextBlock x:Name="DeviceIdentityText" Text="{local:TranslatedBinding Identity}" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="0,5,0,0"
+                     TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{local:TranslatedBinding Identity}"/>
+        </StackPanel>
+      </Grid>
+      <Grid Margin="0,0,0,16">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="106"/></Grid.ColumnDefinitions>
+        <StackPanel Margin="0,0,12,0">
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74B;" Foreground="{DynamicResource AccentTextBrush}" Margin="0,0,7,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{local:Loc '下载'}" Foreground="{DynamicResource MutedBrush}" FontSize="11"/>
+          </StackPanel>
+          <WrapPanel VerticalAlignment="Bottom">
+            <TextBlock x:Name="DownloadSpeedText" Text="{Binding DownloadSpeed}" FontFamily="Segoe UI" FontSize="25" FontWeight="SemiBold" TextWrapping="NoWrap"/>
+            <TextBlock Text="Mbps" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="5,0,0,5" VerticalAlignment="Bottom"/>
+          </WrapPanel>
+          <TextBlock x:Name="DownloadTotalText" Text="{local:TranslatedBinding DownloadTotal}" Foreground="{DynamicResource SubtleBrush}" FontSize="10" ToolTip="{local:Loc '本次加速累计下载载荷；此设备下次开始归零'}"/>
+        </StackPanel>
+        <Border Grid.Column="1" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1,0,0,0" Padding="16,0,12,0">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74A;" Foreground="{DynamicResource BlueBrush}" Margin="0,0,7,0" VerticalAlignment="Center"/>
+              <TextBlock Text="{local:Loc '上传'}" Foreground="{DynamicResource MutedBrush}" FontSize="11"/>
+            </StackPanel>
+            <WrapPanel VerticalAlignment="Bottom">
+              <TextBlock x:Name="UploadSpeedText" Text="{Binding UploadSpeed}" FontFamily="Segoe UI" FontSize="25" FontWeight="SemiBold" TextWrapping="NoWrap"/>
+              <TextBlock Text="Mbps" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="5,0,0,5" VerticalAlignment="Bottom"/>
+            </WrapPanel>
+            <TextBlock x:Name="UploadTotalText" Text="{local:TranslatedBinding UploadTotal}" Foreground="{DynamicResource SubtleBrush}" FontSize="10" ToolTip="{local:Loc '本次加速累计上传载荷；此设备下次开始归零'}"/>
+          </StackPanel>
+        </Border>
+        <Border Grid.Column="2" x:Name="NodeLatencyPanel" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1,0,0,0" Padding="16,0,0,0"
+                Background="Transparent" ToolTip="{local:Loc '这是电脑到你选的节点的延迟，不代表实际游戏延迟'}" ToolTipService.InitialShowDelay="450">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE9D9;" Foreground="{DynamicResource AccentTextBrush}" Margin="0,0,7,0" VerticalAlignment="Center"/>
+              <TextBlock Text="{local:Loc '延迟'}" Foreground="{DynamicResource MutedBrush}" FontSize="11"/>
+            </StackPanel>
+            <WrapPanel>
+              <TextBlock x:Name="NodeLatencyText" Text="{Binding NodeLatency}" FontFamily="Segoe UI" FontSize="25" FontWeight="SemiBold" TextWrapping="NoWrap"/>
+              <TextBlock Text="ms" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="5,0,0,5" VerticalAlignment="Bottom"/>
+            </WrapPanel>
+          </StackPanel>
+        </Border>
+      </Grid>
+      <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Padding="0,10,0,0">
+        <StackPanel>
+          <Grid Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{local:Loc '设备网络参数'}" Style="{StaticResource SectionTitle}" VerticalAlignment="Center"/>
+              <Button x:Name="TogglePrimaryParametersButton" Style="{StaticResource IconButton}" Click="Parameters_Click" Tag="{Binding}" ToolTip="{local:Loc '展开或收起网络参数'}" Width="26" Height="24" MinHeight="24" Margin="8,0,0,0">
+                <TextBlock x:Name="TogglePrimaryParametersIcon" Style="{StaticResource IconText}" Text="{Binding ParameterToggleIcon}" FontSize="12"/>
+              </Button>
+            </StackPanel>
+            <Button Style="{StaticResource IconButton}" Click="Copy_Click" Tag="{Binding}" ToolTip="{local:Loc '复制四项网络参数'}" HorizontalAlignment="Right" Width="26" Height="24" MinHeight="24">
+              <TextBlock Style="{StaticResource IconText}" Text="&#xE8C8;" FontSize="14"/>
+            </Button>
+          </Grid>
+          <Grid x:Name="GatewayParameters">
+            <Grid.Style>
+              <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Style.Triggers>
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding ParametersReady}" Value="True"/>
+                      <Condition Binding="{Binding ParametersExpanded}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Visibility" Value="Visible"/>
+                  </MultiDataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="16"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="10"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+            <Border Background="{DynamicResource FieldBrush}" CornerRadius="4" Padding="10,7">
+              <StackPanel><TextBlock Text="{local:Loc 'IPv4 地址'}" FontSize="10" Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,4"/><TextBox x:Name="ManualIPText" Text="{Binding DeviceIP, Mode=OneWay}" Style="{StaticResource ParameterText}"/></StackPanel>
+            </Border>
+            <Border Grid.Column="2" Background="{DynamicResource FieldBrush}" CornerRadius="4" Padding="10,7">
+              <StackPanel><TextBlock Text="{local:Loc '子网掩码'}" FontSize="10" Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,4"/><TextBox x:Name="ManualMaskText" Text="{Binding Netmask, Mode=OneWay}" Style="{StaticResource ParameterText}"/></StackPanel>
+            </Border>
+            <Border Grid.Row="2" Background="{DynamicResource FieldBrush}" CornerRadius="4" Padding="10,7">
+              <StackPanel><TextBlock Text="{local:Loc '默认网关'}" FontSize="10" Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,4"/><TextBox x:Name="ManualGatewayText" Text="{Binding Gateway, Mode=OneWay}" Style="{StaticResource ParameterText}"/></StackPanel>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="2" Background="{DynamicResource FieldBrush}" CornerRadius="4" Padding="10,7">
+              <StackPanel><TextBlock Text="{local:Loc '首选 DNS'}" FontSize="10" Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,4"/><TextBox x:Name="ManualDNSText" Text="{Binding DNS, Mode=OneWay}" Style="{StaticResource ParameterText}"/></StackPanel>
+            </Border>
+          </Grid>
+          <TextBlock x:Name="ManualPlanNote" Text="{local:TranslatedBinding ParameterNote}" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="0,8,0,0"/>
+          <TextBlock x:Name="PreparationIssueText" Text="{local:TranslatedBinding PreparationIssue}" Foreground="{DynamicResource ErrorBrush}" FontSize="10" Margin="0,4,0,0">
+            <TextBlock.Style><Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+              <Style.Triggers><Trigger Property="Text" Value=""><Setter Property="Visibility" Value="Collapsed"/></Trigger></Style.Triggers>
+            </Style></TextBlock.Style>
+          </TextBlock>
+        </StackPanel>
+      </Border>
+      <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,12,0,0">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,14,0">
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8CE;" Foreground="{DynamicResource MutedBrush}" Margin="0,0,9,0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="CurrentOutletText" Text="{local:TranslatedBinding OutletLabel}" Foreground="{DynamicResource MutedBrush}"/>
+          </StackPanel>
+          <ComboBox Grid.Column="1" x:Name="QuickNodeBox" ItemsSource="{Binding DataContext.NodeOptions, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding SelectedNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Node_Changed"
+                    IsEnabled="{Binding CanSelectNode}" ToolTip="{local:Loc '此设备使用的订阅节点'}">
+            <ComboBox.Style>
+              <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Style.Triggers><DataTrigger Binding="{Binding UsesIndependentOutlet}" Value="False"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger></Style.Triggers>
+              </Style>
+            </ComboBox.Style>
+          </ComboBox>
+          <Button Grid.Column="1" x:Name="ProxySettingsButton" Content="{local:Loc 'Clash 全局模式 · 查看设置'}" Click="Settings_Click" Margin="0">
+            <Button.Style>
+              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Style.Triggers><DataTrigger Binding="{Binding UsesIndependentOutlet}" Value="False"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers>
+              </Style>
+            </Button.Style>
+          </Button>
+        </Grid>
+      </Border>
+    </StackPanel>
+  </Border>
+</UserControl>

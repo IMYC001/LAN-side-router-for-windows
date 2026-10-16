@@ -1,0 +1,36 @@
+name: "Bug report / 问题反馈"
+description: "Report a reproducible problem / 反馈可复现的问题"
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include subscriptions, tokens, full YAML or unredacted diagnostics. 请勿上传订阅、令牌、完整 YAML 或未脱敏诊断。"
+  - type: input
+    id: version
+    attributes:
+      label: "Application version / 软件版本"
+      placeholder: "0.5.13"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment / 环境"
+      description: "Windows version, device model, Ethernet/Wi-Fi, packet driver, exit mode and Clash TUN status. Windows 版本、设备型号、连接方式、驱动、出口模式与 Clash TUN 状态。"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "Steps to reproduce / 复现步骤"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected and actual behavior / 预期与实际结果"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Sanitized screenshots or details / 脱敏截图或补充信息"

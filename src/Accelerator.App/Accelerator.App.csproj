@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\accelerator.ico</ApplicationIcon>
+    <AssemblyName>Accelerator</AssemblyName>
+    <Version>0.5.13</Version>
+    <Product>局域网设备加速器</Product>
+    <Title>局域网设备加速（旁路由模式）</Title>
+    <Company>IMYC001</Company>
+    <Description>Windows LAN device acceleration in side router mode.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="Assets\accelerator.ico" />
+    <EmbeddedResource Include="Assets\accelerator.ico" LogicalName="Accelerator.Icon" />
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+</Project>
