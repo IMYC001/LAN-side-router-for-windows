@@ -53,6 +53,12 @@ Complete the smoke-tested app build first. Packaging verifies binary/report hash
 
 Output: `dist\Accelerator-0.5.13-Setup-win-x64.exe`.
 
+## GitHub 构建 / GitHub Build
+
+仓库的 Actions 中提供手动运行的 `Build v0.5.13 release packages`。它从固定的已审查版本标签导出源码，在 GitHub Windows runner 上运行相同的构建和离线验证，只向已存在的草稿 Release 上传文件，不会自动公开发布。需要仓库写入权限；运行前应停止其他对该草稿的附件上传。
+
+The manually dispatched `Build v0.5.13 release packages` workflow exports the reviewed tag, runs the same builds and offline checks on a GitHub Windows runner, and uploads only to an existing draft release. It does not publish the release. Repository write access is required; stop other uploads to the draft before running it.
+
 ## 验证范围 / Validation Scope
 
 Offline checks cover protocol framing, TCP/UDP relay, loss/reordering, multi-device state isolation, subscription handling, profile restart, localization, themes and installer ownership fixtures. Synthetic throughput is not a real console benchmark. Real driver installation/removal, LAN compatibility, NAT, long sessions and game performance need separate hardware testing.

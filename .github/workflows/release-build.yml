@@ -1,0 +1,88 @@
+name: Build v0.5.13 release packages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-build-v0.5.13
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Export the published source tag
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git clone --depth 1 --branch v0.5.13 https://github.com/IMYC001/LAN-side-router-for-windows.git tagged-source
+          if ($LASTEXITCODE -ne 0) { throw 'Source clone failed.' }
+          $commit = git -C tagged-source rev-parse HEAD
+          if ($commit -ne 'a93a1e1d7be2b3c5c9b2477668c20cf5b94426af') {
+            throw 'The release tag no longer matches the reviewed source.'
+          }
+          git -C tagged-source archive --format=zip --output=../release-source.zip HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'Source export failed.' }
+          Expand-Archive -LiteralPath release-source.zip -DestinationPath release-source
+
+      - name: Download verified tools and dependencies
+        working-directory: release-source
+        run: |
+          ./scripts/Get-Tools.ps1
+          ./scripts/Get-Mihomo.ps1
+          ./scripts/Get-InstallerTools.ps1
+
+      - name: Test and build the desktop application
+        working-directory: release-source
+        run: |
+          ./scripts/Build.ps1 -OutputName Accelerator-0.5.13 -SmokeTest
+          Get-Content test-results/Accelerator-0.5.13-checks.json
+
+      - name: Build the installer and folder archive
+        working-directory: release-source
+        run: |
+          $ErrorActionPreference = 'Stop'
+          ./scripts/Build-Installer.ps1 -OutputName Accelerator-0.5.13 -SkipAppBuild
+          [IO.Compression.ZipFile]::CreateFromDirectory(
+            (Join-Path $PWD 'dist/Accelerator-0.5.13'),
+            (Join-Path $PWD 'dist/Accelerator-0.5.13-win-x64.zip'),
+            [IO.Compression.CompressionLevel]::Optimal,
+            $true)
+          $lines = foreach ($name in @(
+            'Accelerator-0.5.13-Setup-win-x64.exe',
+            'Accelerator-0.5.13-win-x64.zip'
+          )) {
+            $hash = (Get-FileHash -LiteralPath "dist/$name" -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $name"
+          }
+          $lines | Set-Content -LiteralPath dist/SHA256SUMS.txt -Encoding ascii
+          Get-Content test-results/installer-checks.json
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Upload packages to the existing draft
+        working-directory: release-source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $draft = gh release view v0.5.13 --json isDraft --jq .isDraft
+          if ($LASTEXITCODE -ne 0 -or $draft -ne 'true') {
+            throw 'Only an existing draft release may receive these packages.'
+          }
+          gh release upload v0.5.13 `
+            dist/Accelerator-0.5.13-Setup-win-x64.exe `
+            dist/Accelerator-0.5.13-win-x64.zip `
+            dist/SHA256SUMS.txt --clobber
+          if ($LASTEXITCODE -ne 0) { throw 'Release asset upload failed.' }
+          gh api "repos/$env:GH_REPO/releases/tags/v0.5.13" `
+            --jq '{draft, assets: [.assets[] | {name, size, state, digest}]}'
+          if ($LASTEXITCODE -ne 0) { throw 'Release asset inspection failed.' }
