@@ -26,7 +26,7 @@ jobs:
           git clone --depth 1 --branch v0.5.14 https://github.com/IMYC001/LAN-side-router-for-windows.git tagged-source
           if ($LASTEXITCODE -ne 0) { throw 'Source clone failed.' }
           $commit = git -C tagged-source rev-parse HEAD
-          if ($commit -ne $env:GITHUB_SHA) {
+          if ($commit -ne '832f2feea8e4656e5aac4a0147b9aaf160dbdc52') {
             throw 'The release tag no longer matches the reviewed source.'
           }
           git -C tagged-source archive --format=zip --output=../release-source.zip HEAD
@@ -83,6 +83,24 @@ jobs:
             dist/Accelerator-0.5.14-win-x64.zip `
             dist/SHA256SUMS.txt --clobber
           if ($LASTEXITCODE -ne 0) { throw 'Release asset upload failed.' }
-          gh api "repos/$env:GH_REPO/releases/tags/v0.5.14" `
-            --jq '{draft, assets: [.assets[] | {name, size, state, digest}]}'
+          $metadata = gh release view v0.5.14 --json isDraft,assets
           if ($LASTEXITCODE -ne 0) { throw 'Release asset inspection failed.' }
+          $release = $metadata | ConvertFrom-Json
+          $files = @(
+            'Accelerator-0.5.14-Setup-win-x64.exe',
+            'Accelerator-0.5.14-win-x64.zip',
+            'SHA256SUMS.txt'
+          )
+          if (-not $release.isDraft -or $release.assets.Count -ne $files.Count) {
+            throw 'Unexpected release state or asset count.'
+          }
+          foreach ($file in $files) {
+            $asset = @($release.assets | Where-Object name -eq $file)
+            $local = Get-Item -LiteralPath "dist/$file"
+            $digest = 'sha256:' + (Get-FileHash -LiteralPath $local.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            if ($asset.Count -ne 1 -or $asset[0].state -ne 'uploaded' -or
+                $asset[0].size -ne $local.Length -or $asset[0].digest -ne $digest) {
+              throw "Release asset verification failed: $file"
+            }
+          }
+          $metadata
